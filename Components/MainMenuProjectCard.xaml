@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="ProjectSoft.Components.MainMenuProjectCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjectSoft.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="300"
+             x:Name="root">
+    <Grid>
+        <Border MinWidth="225" MinHeight="60" CornerRadius="30" Background="{StaticResource ForegroundColor}">
+            <StackPanel Orientation="Horizontal"  >
+                <Image Source="{Binding IconPath, ElementName=root}"  Width="16" Height="16"
+                       Margin="15,0,0,0"/>
+                <TextBlock Text="{Binding Title, ElementName=root}" Margin="15,10" Padding="5"
+                           Foreground="{StaticResource StandardText}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

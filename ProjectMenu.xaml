@@ -1,0 +1,455 @@
+﻿<Page x:Class="ProjectSoft.ProjectMenu"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ProjectSoft"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProjectMenu"
+      FontSize="28px"
+      WindowTitle="ProjectSoft">
+
+    <Page.Resources>
+        <Style TargetType="TextBlock" />
+        <Style TargetType="Label" />
+    </Page.Resources>
+
+    <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30px"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="30px"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30px"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="30px"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!--<ListView x:Name="TopBar" Grid.Column="1" Grid.Row="1" BorderThickness="0px" Background="Transparent">
+
+            <ListView.Resources>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Margin" Value="15,5"/>
+                    <Setter Property="Orientation" Value="Horizontal"/>
+                    
+                </Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                            <Setter Property="BorderThickness" Value="1,1,0,1"/>
+                            <Setter Property="BorderBrush" Value="DarkGray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <Border x:Name="Tasks_Menu_Tab" BorderThickness="1,1,1,0" BorderBrush="White" CornerRadius="5">
+                <StackPanel>
+                    <Image Source="{Binding Icon}" Width="16" Height="16"/>
+                    <Label>Tasks</Label>
+                </StackPanel>
+            </Border>
+            <StackPanel Margin="15,5" Orientation="Horizontal">
+                <Image Source="{Binding Icon}" Width="16" Height="16"/>
+                <Label>Members</Label>
+            </StackPanel>
+            <StackPanel Margin="15,5" Orientation="Horizontal">
+                <Image Source="{Binding Icon}" Width="16" Height="16"/>
+                <Label>Settings</Label>
+            </StackPanel>
+        </ListView>-->
+
+            <TabControl x:Name="Project_TabControl" Grid.Row="2" Grid.Column="1" Background="Transparent" BorderThickness="0"
+                        SelectionChanged="TabControl_SelectionChanged">
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Border BorderThickness="1" BorderBrush="Black">
+                                        <Grid Name="TabPanel">
+                                            <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2" />
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="TabPanel" Property="Background" Value="{StaticResource SelectedBackground}" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="TabPanel" Property="Background" Value="Transparent" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Foreground" Value="{StaticResource StandardText}"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="10"/>
+                        <Setter Property="Height" Value="100"/>
+                        <Setter Property="Width" Value="200"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="FontFamily" Value="Inter"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                    </Style>
+                    <!--<Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}"/>-->
+                </TabControl.Resources>
+                <TabItem Header="Tasks" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <Grid Margin="20 10">
+                                <Border  >
+                                    <Button x:Name="NewTask_btn" Click="New_Task_btn_Click" 
+                                            BorderBrush="Transparent" Content="+ Task" Margin="0,3,0,5"
+                                            MinWidth="100" Background="{StaticResource ForegroundColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="20"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                
+                                </Border>
+                            </Grid>
+
+                        </Grid>
+
+                        <ListView x:Name="Task_ListView" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Sample}" 
+                              Background="{StaticResource ForegroundColor}" BorderBrush="Transparent"
+                              VerticalContentAlignment="Top">
+                            <!--ScrollViewer.VerticalScrollBarVisibility="Visible"
+                              ScrollViewer.CanContentScroll="True"-->
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{StaticResource BoxBackground}" CornerRadius="20" Margin="5" Padding="10" MouseLeftButtonUp="Task_Click">
+                                        <StackPanel Orientation="Horizontal" >
+                                            <StackPanel.Resources>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Margin" Value="15"/>
+                                                </Style>
+                                            </StackPanel.Resources>
+                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Foreground="White"/>
+                                            <!--<TextBlock Text="{Binding Department}" FontSize="12"/>-->
+                                            <TextBlock Text="{Binding DueDate}" FontSize="12" Foreground="White"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Members">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Margin="5">
+                            Current Members: 
+                        </TextBlock>
+                        
+                        <ComboBox x:Name="MembersComboBox"
+                                      ItemsSource="{Binding AvailableMembers}"
+                                      IsEditable="True"
+                                      IsTextSearchEnabled="True"
+                                      TextSearch.TextPath="Name"
+                                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                      Grid.Column="1"
+                                  HorizontalAlignment="Right"
+                                  Width="400"
+                                  Margin="5">
+                                      
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Foreground="Black" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button x:Name="AddButton" Content="Add"  Click="AddMember_Click" 
+                                        Grid.Column="2" Margin="5 0" Padding="25 0" BorderBrush="Transparent">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="20"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <ListBox x:Name="SelectedMembersList" ItemsSource="{Binding Members}" Grid.Row="1" Background="Transparent" BorderBrush="Transparent">
+                            <ListBox.Resources>
+                                <DataTemplate x:Key="Viewer_style">
+                                    <Border Grid.Column="0" Background="{StaticResource ForegroundColor}" CornerRadius="20" Padding="5">
+                                        <Grid Margin="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Name}" Foreground="White" Margin="10 0" VerticalAlignment="Center"/>
+                                            <Border BorderBrush="White"
+                                                    BorderThickness="1"
+                                                    Background="Black"
+                                                    Width="1"
+                                                    VerticalAlignment="Stretch" 
+                                                    Grid.Column="1"
+                                                    Margin="10 0"/>
+                                            <!--<ComboBox x:Name="EditAccess_combo" SelectedItem="{Binding Access, UpdateSourceTrigger=PropertyChanged}" 
+                                                ItemsSource="{Binding Source={x:Static local:ProjectTask.TaskStatuses}}" 
+                                                Grid.Row="8" Grid.Column="2" Margin="0 0 0 10"
+                                                Foreground="Black" Visibility="{Binding AccessEdit}"/>-->
+                                            <TextBlock x:Name="Access_txt" Grid.Column="2" Text="{Binding Access}" Foreground="#a1a2ae" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                            <Button Grid.Column="3" Margin="50 0 10 0" Background="Transparent" BorderBrush="Transparent" Click="RemoveMember_Click">X</Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                                <DataTemplate x:Key="AccessEdit_style">
+                                    <Border Grid.Column="0" Background="{StaticResource ForegroundColor}" CornerRadius="20" Padding="5">
+                                        <Grid Margin="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Name}" Foreground="White" Margin="10 0" VerticalAlignment="Center"/>
+                                            <Border BorderBrush="White"
+                                                    BorderThickness="1"
+                                                    Background="Black"
+                                                    Width="1"
+                                                    VerticalAlignment="Stretch" 
+                                                    Grid.Column="1"
+                                                    Margin="10 0"/>
+                                            <ComboBox x:Name="EditAccess_combo" SelectedItem="{Binding tempAccess, UpdateSourceTrigger=PropertyChanged}" 
+                                                ItemsSource="{Binding Source={x:Static local:Member.AccessTypes}}" 
+                                                Grid.Row="8" Grid.Column="2" Margin="0 0 0 10"
+                                                Foreground="Black" Visibility="{Binding AccessEdit}"/>
+                                            <!--<TextBlock x:Name="Access_txt" Grid.Column="2" Text="{Binding Access}" Foreground="#a1a2ae" Margin="5,0,0,0" VerticalAlignment="Center"/>-->
+                                            <Button Grid.Column="3" Margin="50 0 10 0" Background="Transparent" BorderBrush="Transparent" Click="RemoveMember_Click">X</Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.Resources>
+
+                            <!--<ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Grid.Column="0" Background="{StaticResource ForegroundColor}" CornerRadius="20" Padding="5">
+                                        <Grid Margin="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Name}" Foreground="White" Margin="10 0" VerticalAlignment="Center"/>
+                                            <Border BorderBrush="White"
+                                                    BorderThickness="1"
+                                                    Background="Black"
+                                                    Width="1"
+                                                    VerticalAlignment="Stretch" 
+                                                    Grid.Column="1"
+                                                    Margin="10 0"/>
+                                            --><!--<ComboBox x:Name="EditAccess_combo" SelectedItem="{Binding Access, UpdateSourceTrigger=PropertyChanged}" 
+                                                ItemsSource="{Binding Source={x:Static local:ProjectTask.TaskStatuses}}" 
+                                                Grid.Row="8" Grid.Column="2" Margin="0 0 0 10"
+                                                Foreground="Black" Visibility="{Binding AccessEdit}"/>--><!--
+                                            <TextBlock x:Name="Access_txt" Grid.Column="2" Text="{Binding Access}" Foreground="#a1a2ae" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                            <Button Grid.Column="3" Margin="50 0 10 0" Background="Transparent" BorderBrush="Transparent" Click="RemoveMember_Click">X</Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>-->
+                        </ListBox>
+                        <Button x:Name="EditAccess_btn" Grid.Column="2" Grid.Row="4" Content="Edit Access" VerticalAlignment="Bottom" Visibility="Hidden" Click="EditAccess_btn_Click">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="20"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button x:Name="ConfirmChanges_btn" Grid.Column="2" Grid.Row="4" Content="Confirm" VerticalAlignment="Bottom" Visibility="Hidden" Click="ConfirmChanges_btn_Click">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="20"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button x:Name="CancelChanges_btn" Grid.Column="1" Grid.Row="4" Content="Cancel" VerticalAlignment="Bottom" Visibility="Hidden" Click="CancelChanges_btn_Click" MaxWidth="150" Padding="20 10" Margin="10 5" HorizontalAlignment="Right">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="20"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
+                </TabItem>
+                <!--<TabItem Header="Settings">
+                    <TextBlock>Settings</TextBlock>
+                </TabItem>-->
+            </TabControl>
+
+            <Grid Grid.Column="1" Grid.Row="2">
+                <ContentControl x:Name="ProjectContent"/>
+            </Grid>
+
+
+            <Grid Grid.Row="3" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Click="BackButton_Click" Content="Back" BorderBrush="Transparent" Padding="15">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+            <!-- Task Creation Menu -->
+            <!--<Popup x:Name="TaskPopup" Height="800" Width="600" Placement="Center" StaysOpen="False">
+                <Popup.Resources>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Foreground" Value="{StaticResource PopupText}"/>
+                    </Style>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Foreground" Value="{StaticResource PopupText}"/>
+                    </Style>
+                </Popup.Resources>
+                <Border Background="White" BorderBrush="Black" BorderThickness="1" CornerRadius="15">
+                    <StackPanel Margin="10">
+
+                        <Grid x:Name="PopupDataGrid" DataContext="{Binding}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="15px"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15px"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Name:" Margin="0 0 5 0" VerticalAlignment="Center" Grid.Row="1"/>
+                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" Margin="0 0 0 10"/>
+
+                            <TextBlock Text="Description:" Margin="0 0 5 0" VerticalAlignment="Center" Grid.Row="2"/>
+                            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="0 0 0 10" TextWrapping="Wrap" MaxHeight="250" AcceptsReturn="True"/>
+
+                            <TextBlock Text="Due Date:" Margin="0 0 5 0" VerticalAlignment="Center" Grid.Row="3"/>
+                            <DatePicker SelectedDate="{Binding DueDate, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="0 0 0 10"/>
+
+                            <TextBlock Text="Status:" Margin="0 0 5 0" VerticalAlignment="Center" Grid.Row="4"/>
+                            <ComboBox SelectedItem="{Binding Status, UpdateSourceTrigger=PropertyChanged}" 
+                                ItemsSource="{Binding Source={x:Static local:ProjectTask.TaskStatuses}}" 
+                                Grid.Row="4" Grid.Column="1" Margin="0 0 0 10">
+                            </ComboBox>
+                            <TextBlock Text="Members:" Margin="0 0 5 0" VerticalAlignment="Center" Grid.Row="5"/>
+                            <Grid Grid.Row="5" Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                --><!-- UI elements for searchable ComboBox, "Add" button, and list of selected members --><!--
+                                <ComboBox x:Name="popup_MembersComboBox"
+                                      ItemsSource="{Binding AvailableMembers}"
+                                      IsEditable="True"
+                                      IsTextSearchEnabled="True"
+                                      TextSearch.TextPath="Name"
+                                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" Foreground="Black" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button x:Name="popup_AddButton" Content="Add" Click="popup_AddMember_Click"
+                                        Grid.Column="1"/>
+                                <ListBox x:Name="popup_SelectedMembersList" ItemsSource="{Binding Members}" Grid.Row="2" Grid.Column="0" Background="Transparent">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Grid.Column="0" Background="LightGray" CornerRadius="20" Padding="5">
+                                                <Grid Margin="5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Name}" Foreground="Black" Margin="10 0" VerticalAlignment="Center"/>
+                                                    <Border BorderBrush="Black"
+                                                    BorderThickness="1"
+                                                    Background="Black"
+                                                    Width="1"
+                                                    VerticalAlignment="Stretch" 
+                                                    Grid.Column="1"
+                                                    Margin="10 0"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding Access}" Foreground="Gray" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                                    <Button Grid.Column="3" Margin="50 0 10 0" BorderBrush="DarkRed" Click="popup_RemoveMember_Click">Remove</Button>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 0 0">
+                            <Button Content="Cancel" Margin="0 0 10 0" Click="TaskPopupClose_Click"/>
+                            <Button Content="Submit" IsDefault="True" Click="TaskPopupSubmit_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Popup>-->
+        </Grid>
+    </Grid>
+</Page>
